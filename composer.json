@@ -1,0 +1,22 @@
+{
+    "name": "fannoxnetwork/fannoxcloudlogin",
+    "description": "A library for Fannox Cloud login integration",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "FannoxNetwork\\": "src/FannoxNetwork/"
+        }
+    },
+    "require": {
+        "php": ">=7.4",
+        "ext-curl": "*",
+        "ext-mysqli": "*"
+    },
+    "authors": [
+        {
+            "name": "Team FannoxNetwork",
+            "email": "team@fannoxnetwork.com"
+        }
+    ],
+    "license": "proprietary"
+}
