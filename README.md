@@ -19,4 +19,4 @@ The `FannoxCloudLogin` library facilitates integration with the Fannox Cloud OAu
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/FannoxCloudLogin.git
+   git clone https://github.com/Fannoxnetwork/FannoxCloudLogin.git
