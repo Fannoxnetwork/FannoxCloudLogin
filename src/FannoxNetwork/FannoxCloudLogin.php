@@ -12,7 +12,6 @@
 namespace FannoxNetwork;
 
 use Exception;
-use mysqli;
 
 class FannoxCloudLogin {
     private $clientId;
@@ -20,14 +19,12 @@ class FannoxCloudLogin {
     private $redirectUri;
     private $baseUrl;
     private $state;
-    private $conn;
 
-    public function __construct($clientId, $clientSecret, $redirectUri, $conn) {
+    public function __construct($clientId, $clientSecret, $redirectUri) {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
         $this->redirectUri = $redirectUri;
         $this->baseUrl = "http://localhost/fannox";
-        $this->conn = $conn;
     }
 
     public function redirectToLogin() {
@@ -48,19 +45,7 @@ class FannoxCloudLogin {
     public function handleCallback() {
         if (isset($_GET['code'], $_GET['state'], $_GET['lid'])) {
 
-            $lid = $this->conn->real_escape_string($_GET['lid']);
-
-            $sql = $this->conn->prepare("SELECT * FROM fn_user_logins WHERE log_id = ?");
-            $sql->bind_param('s', $lid);
-            $sql->execute();
-            $result = $sql->get_result();
-            $row = $result->fetch_assoc();
-
-            if ($_GET['state'] !== $row['oauth_state']) {
-                throw new Exception("Invalid state or missing credentials.");
-            } elseif ($_GET['code'] !== $row['oauth_code']) {
-                throw new Exception("Invalid authorization code.");
-            }
+            $lid = $_GET['lid'];
 
             $authorizationCode = $_GET['code'];
 
@@ -149,21 +134,4 @@ class FannoxCloudLogin {
     }
 }
 
-// Database configuration
-$host = 'localhost';
-$dbname = 'fannox_cloud';
-$username = 'root';
-$password = '';
-
-// Create a connection
-$conn = new mysqli($host, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die('Connection failed: ' . $conn->connect_error);
-}
-
-
-$conn->close();
 ?>
-
